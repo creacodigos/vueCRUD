@@ -8,8 +8,8 @@
           <th>Titulo</th>
           <th>Artista</th>
           <th>Acordes</th>
-          <!--<th>editar</th>
-          <th>borrar</th>-->
+          <th>editar</th>
+          <th>borrar</th>
         </tr>
 
         <tr v-for="partitura in partituras">
@@ -17,8 +17,8 @@
           <td>{{ partitura.titulo }}</td>
           <td>{{ partitura.artista }}</td>
           <td>{{ partitura.acordes }}</td>
-          <!--<td><span class='update btn btn-warning' :id='{{ partitura.id }}'>Editar</span></td>
-          <td><span class='delete btn btn-danger' :id='{{ partitura.id }}'>Borrar</span></td>-->
+          <td><span class='update btn btn-warning' :id=`partitura.id`>Editar</span></td>
+          <td><span class='delete btn btn-danger' :id=`partitura.id`>Borrar</span></td>
         </tr>
       </table>
     </div>
@@ -60,7 +60,7 @@
         <input type="button"
                class="form-control"
                value="Enviar"
-               @click="createContact()"
+               @click="createPartitura()"
         >
       </form>
     </div>
@@ -98,7 +98,39 @@ export default{
 				});
 		},
 		createPartitura: function(){
-		},
+
+      console.log("Create contact!")
+
+      let formData = new FormData();
+      console.log("titulo:", this.titulo)
+      formData.append('titulo', this.titulo)
+      formData.append('artista', this.artista)
+      formData.append('acordes', this.acordes)
+      formData.append('texto', this.texto)
+
+      var partitura = {};
+      formData.forEach(function(value, key){
+          partitura[key] = value;
+      });
+
+      axios({
+          method: 'post',
+          url: 'http://localhost:8888/ApiRestFul/api.php/partitura',
+          data: formData,
+          config: { headers: {'Content-Type': 'multipart/form-data' }}
+      })
+      .then((response) => {
+          //handle success
+          console.log(response)
+          this.partituras.push(partitura)
+          this.resetForm();
+      })
+      .catch(function (response) {
+          //handle error
+          console.log(response)
+      });
+        
+    },
 		resetForm: function(){
 			this.titulo = '';
 			this.artista = '';
@@ -108,14 +140,3 @@ export default{
 	}
 }   
 </script>
-
-<style>
-  :root {
-    text-align: center;
-  }
-
-  h1 {
-    font-family: Montserrat, Impact, sans-serif;
-    font-size: 72px;
-  }
-</style>
