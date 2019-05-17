@@ -23,18 +23,87 @@
     </div>
 
     <div class="col-lg-5 pull-right">
-      <form id="form" action="http://localhost:8888/ApiRestFul/api.php/partitura" method="POST"
-name="formulario" data-partitura="0">
-        <input id="titulo_form" type="text" v-model="titulo" name="titulo" placeholder="Titulo" class="form-control" /></br>
-        <input id="artista_form" type="text" v-model="artista" name="artista" placeholder="Artista" class="form-control" /></br>
-        <input id="acordes_form" type="text" v-model="acordes" name="acordes" placeholder="Acordes" class="form-control" /></br>
-        <textarea id="texto_form" v-model="texto" name="texto"
-class="form-control" placeholder="Partitura con acordes"></textarea></br>
-        <input type="button" class="form-control" @click="createContact()" value="Enviar">
+      <form id="form"
+            action="http://localhost:8888/ApiRestFul/api.php/partitura"
+            method="POST"
+            name="formulario"
+            data-partitura="0"
+      >
+        <input id="titulo_form"
+               v-model="titulo"
+               type="text"
+               name="titulo"
+               placeholder="Titulo"
+               class="form-control"
+        /></br>
+        <input id="artista_form"
+               v-model="artista"
+               type="text"
+               name="artista"
+               placeholder="Artista"
+               class="form-control"
+        /></br>
+        <input id="acordes_form"
+               v-model="acordes"
+               type="text"
+               name="acordes"
+               placeholder="Acordes"
+               class="form-control"
+        /></br>
+        <textarea id="texto_form"
+                  v-model="texto"
+                  name="texto"
+                  class="form-control"
+                  placeholder="Partitura con acordes"
+        ></textarea></br>
+        <input type="button"
+               class="form-control"
+value="Enviar"
+               @click="createContact()"
+        >
       </form>
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default{
+	name: 'App',
+	data: function() {
+		return {
+			titulo: '',
+			artista: '',
+			acordes: '',
+			texto: '',
+			partituras: []
+		};
+	},
+	mounted: function() {
+		console.log('Componente App.bue montado!')
+		this.getPartituras()
+	},
+
+	methods: {
+		getPartituras: function(){
+			axios.get('http://localhost:8888/ApiRestFul/api.php/partituras')
+				.then(function(response) {
+					console.log(response.data);
+					this.partituras = response.data;
+
+				})
+				.catch(function(error) {
+					console.log(error);
+				});
+		},
+		createPartitura: function(){
+		},
+		resetForm: function(){
+		}
+	}
+}   
+</script>
 
 <style>
   :root {
