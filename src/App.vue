@@ -11,7 +11,7 @@
           <th>borrar</th>-->
         </tr>
 
-        <tr v-for='partitura in partituras'>
+        <tr v-for="partitura in partituras">
           <td>{{ partitura.id }}</td>
           <td>{{ partitura.titulo }}</td>
           <td>{{ partitura.artista }}</td>
@@ -23,13 +23,14 @@
     </div>
 
     <div class="col-lg-5 pull-right">
-      <form action="http://localhost:8888/ApiRestFul/api.php/partitura" id="form" method="POST" name="formulario" data-partitura="0">
-        <input id="titulo_form" type="text" name="titulo" v-model="titulo" placeholder="Titulo" class="form-control" /></br>
-        <input id="artista_form" type="text" name="artista" v-model="artista" placeholder="Artista" class="form-control" /></br>
-        <input id="acordes_form" type="text" name="acordes" v-model="acordes" placeholder="Acordes" class="form-control" /></br>
-        <textarea id="texto_form" name="texto" v-model="texto" class="form-control" placeholder="Partitura con acordes"></textarea></br>
-        <input type="submit" class="form-control" value="Enviar"></br>
-        <input id="boton_borrar" type="button" class="form-control black" value="Borrar">
+      <form id="form" action="http://localhost:8888/ApiRestFul/api.php/partitura" method="POST"
+name="formulario" data-partitura="0">
+        <input id="titulo_form" type="text" v-model="titulo" name="titulo" placeholder="Titulo" class="form-control" /></br>
+        <input id="artista_form" type="text" v-model="artista" name="artista" placeholder="Artista" class="form-control" /></br>
+        <input id="acordes_form" type="text" v-model="acordes" name="acordes" placeholder="Acordes" class="form-control" /></br>
+        <textarea id="texto_form" v-model="texto" name="texto"
+class="form-control" placeholder="Partitura con acordes"></textarea></br>
+        <input type="button" class="form-control" @click="createContact()" value="Enviar">
       </form>
     </div>
   </div>
