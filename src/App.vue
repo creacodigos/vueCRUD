@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="./assets/logo.png" alt="">
     <div class="col-lg-7">
       <table class="table">
         <tr>
@@ -58,7 +59,7 @@
         ></textarea></br>
         <input type="button"
                class="form-control"
-value="Enviar"
+               value="Enviar"
                @click="createContact()"
         >
       </form>
@@ -87,19 +88,22 @@ export default{
 
 	methods: {
 		getPartituras: function(){
-			axios.get('http://localhost:8888/ApiRestFul/api.php/partituras')
+      axios.get('http://localhost:8888/ApiRestFul/api.php/partituras')
 				.then(function(response) {
 					console.log(response.data);
-					this.partituras = response.data;
-
+          this.partituras = response.data;
 				})
 				.catch(function(error) {
-					console.log(error);
+					console.log('ERROR: '+ error);
 				});
 		},
 		createPartitura: function(){
 		},
 		resetForm: function(){
+			this.titulo = '';
+			this.artista = '';
+			this.acordes = '';
+			this.texto = '';
 		}
 	}
 }   
