@@ -89,7 +89,7 @@ export default{
 	methods: {
 		getPartituras: function(){
       axios.get('http://localhost:8888/ApiRestFul/api.php/partituras')
-				.then(function(response) {
+				.then((response) => {
 					console.log(response.data);
           this.partituras = response.data;
 				})
